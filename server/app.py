@@ -209,4 +209,8 @@ def get_artifact_by_uuid(uuid):
         return jsonify({"error": "Artifact not found"}), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    # Default to port 5000 if TEA_SERVER_PORT is not set
+    port = int(os.environ.get("TEA_SERVER_PORT", 5000))
+    # Use host='0.0.0.0' to make the server accessible externally, not just on localhost
+    app.run(debug=True, host='0.0.0.0', port=port)

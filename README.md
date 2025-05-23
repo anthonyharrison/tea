@@ -24,6 +24,13 @@ The server is built using Flask.
     pip install -r requirements.txt
     ```
 
+4.  **Install local packages:**
+    (This makes the `server` and `client` modules importable as `tea_server` and `tea_client` respectively, and makes their dependencies available.)
+    ```bash
+    pip install -e ./server
+    pip install -e ./client
+    ```
+
 ## Running the Flask Server
 
 1.  **Ensure your virtual environment is activated.**
@@ -33,6 +40,18 @@ The server is built using Flask.
     python server/app.py
     ```
     The server will typically start on `http://localhost:5000`. You should see output indicating the server is running.
+
+    ### Configuring the Server Port
+
+    By default, the server runs on port 5000. You can specify a different port by setting the `TEA_SERVER_PORT` environment variable before running the server:
+
+    ```bash
+    export TEA_SERVER_PORT=8080  # For Linux/macOS
+    # set TEA_SERVER_PORT=8080    # For Windows Command Prompt
+    # $env:TEA_SERVER_PORT="8080" # For Windows PowerShell
+    python server/app.py
+    ```
+    The server will then be accessible at `http://localhost:YOUR_PORT` (or `http://0.0.0.0:YOUR_PORT`).
 
 ## Using the Client
 
@@ -48,16 +67,20 @@ The client script (`client/client.py`) provides functions to interact with the s
 
 ## Running Unit Tests
 
-Unit tests are located in the `tests/` directory.
+Unit tests are located in the `tests/` directory and use the pytest framework.
 
-1.  **Ensure your virtual environment is activated and dependencies are installed.**
+1.  **Ensure your virtual environment is activated and all dependencies (including local packages) are installed.**
 2.  **Navigate to the project's root directory.**
 3.  **Run all tests:**
     ```bash
-    python -m unittest discover -s tests
+    pytest
     ```
-    Alternatively, you can run specific test files:
+    You can also run tests in specific files or directories:
     ```bash
-    python -m unittest tests/test_server.py
-    python -m unittest tests/test_client.py
+    pytest tests/test_server.py
+    pytest tests/test_client.py
+    ```
+    Or run specific tests by name using the `-k` flag:
+    ```bash
+    pytest -k "test_health_check"
     ```
