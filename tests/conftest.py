@@ -1,5 +1,6 @@
 import pytest
-from tea_server.app import app as flask_app # Corrected import path
+# from tea_server.app import app as flask_app # Original import commented out or replaced
+from server.app import app as flask_app # New import strategy
 
 @pytest.fixture
 def app():
